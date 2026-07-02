@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bande Rythmo Local Studio</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="mark">BR</div>
+          <div>
+            <h1>Bande Rythmo Local Studio</h1>
+            <p>Pipeline local video, transcription, alignement et export</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button id="newProjectBtn" class="btn primary">Nouveau projet</button>
+          <button id="runPipelineBtn" class="btn">Analyser</button>
+          <select id="exportFormat" class="select">
+            <option value="json">JSON</option>
+            <option value="xml">XML</option>
+            <option value="srt">SRT</option>
+            <option value="vtt">WebVTT</option>
+            <option value="ass">ASS</option>
+            <option value="mp4">Video MP4</option>
+          </select>
+          <button id="exportBtn" class="btn">Exporter</button>
+          <button id="restartServerBtn" class="btn danger">Redemarrer</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Projets</h2>
+              <button id="refreshBtn" class="icon-btn" title="Rafraichir">R</button>
+            </div>
+            <div id="projectList" class="project-list"></div>
+          </section>
+
+          <section class="panel">
+            <h2>Import</h2>
+            <form id="uploadForm" class="upload-form">
+              <input id="videoInput" type="file" accept="video/*,.mkv,.mov,.mp4,.avi" />
+              <label class="check-row">
+                <input id="autorunInput" type="checkbox" checked />
+                <span>Lancer l'analyse apres import</span>
+              </label>
+              <button class="btn wide" type="submit">Importer la video</button>
+            </form>
+          </section>
+
+          <section class="panel">
+            <h2>Traitement</h2>
+            <div id="jobStatus" class="job-status">Aucun job actif</div>
+            <div class="progress"><span id="jobProgress"></span></div>
+          </section>
+        </aside>
+
+        <section class="stage">
+          <div class="viewer-row">
+            <div class="video-frame">
+              <video id="videoPlayer" controls preload="metadata"></video>
+            </div>
+            <div class="inspector">
+              <h2>Selection</h2>
+              <label>Texte</label>
+              <textarea id="wordText" rows="4"></textarea>
+              <div class="field-grid">
+                <label>Debut <input id="wordStart" type="number" step="0.01" /></label>
+                <label>Fin <input id="wordEnd" type="number" step="0.01" /></label>
+              </div>
+              <button id="saveWordBtn" class="btn wide">Enregistrer</button>
+            </div>
+          </div>
+
+          <div class="transport">
+            <button id="backBtn" class="icon-btn" title="Reculer"><</button>
+            <button id="playBtn" class="btn">Lecture</button>
+            <button id="forwardBtn" class="icon-btn" title="Avancer">></button>
+            <span id="timecode" class="timecode">00:00:00.000</span>
+            <label class="zoom">Zoom <input id="zoomInput" type="range" min="80" max="420" value="180" /></label>
+          </div>
+
+          <div class="rythmo-wrap">
+            <canvas id="rythmoCanvas" width="1400" height="280"></canvas>
+          </div>
+
+          <section class="transcript-panel">
+            <div class="panel-head">
+              <h2>Transcription</h2>
+              <span id="segmentCount" class="muted">0 segment</span>
+            </div>
+            <div id="transcriptList" class="transcript-list"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="projectDialog">
+      <form method="dialog" id="projectForm" class="dialog-card">
+        <h2>Nouveau projet</h2>
+        <label>Nom du projet <input id="projectName" value="Projet bande rythmo" /></label>
+        <label>Langue <input id="projectLanguage" value="fr" /></label>
+        <div class="dialog-actions">
+          <button class="btn" value="cancel">Annuler</button>
+          <button class="btn primary" value="default">Creer</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="/assets/app.js"></script>
+  </body>
+</html>
+
+
+
+
+
